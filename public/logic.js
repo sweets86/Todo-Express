@@ -1,5 +1,3 @@
-
-
 window.onload = main
 
 function main() {
@@ -9,13 +7,15 @@ function main() {
     formDiv.classList = "form"
 
     const input = document.createElement('input')
+    const todo = input.value
+    input.value = ""
 
     const buttonAdd = document.createElement('button')
     buttonAdd.classList = "button"
     buttonAdd.innerHTML = "Lägg till Todo"
-   /*  button.onclick = function () {
-        addNewTodo()
-    } */
+    buttonAdd.onclick = function () {
+        addNewTodo(input.value)
+    }
 
     const button = document.createElement('button')
     button.classList = "button"
@@ -64,15 +64,17 @@ async function getAllTodos() {
     }
 }
 
+function addNewTodo(todo) {
+    console.log(todo)
+}
 
 
-
-async function makeRequest(url, reqMethod, body) {
+async function makeRequest(url, reqMethod, todo) {
 
     const response = await fetch(url, {
         headers: { "Content-Type": "application/json" },
         method: reqMethod,
-        body: JSON.stringify(body)
+        body: JSON.stringify(todo)
     })
     console.log(response)
     const data = await response.json()

@@ -17,6 +17,8 @@ app.get('/todos/:id', (req, res) => {
 })
 
 app.post('/todos', (req, res) => {
+    console.log(req.body)
+    todos.push(req.body)
     res.json("Ny todo")
 })
 
