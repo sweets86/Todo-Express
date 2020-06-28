@@ -7,14 +7,13 @@ function main() {
     formDiv.classList = "form"
 
     const input = document.createElement('input')
-    const todo = input.value
-    input.value = ""
 
     const buttonAdd = document.createElement('button')
     buttonAdd.classList = "button"
     buttonAdd.innerHTML = "Lägg till Todo"
     buttonAdd.onclick = function () {
         addNewTodo(input.value)
+        input.value = ""
     }
 
     const button = document.createElement('button')
@@ -66,15 +65,16 @@ async function getAllTodos() {
 
 function addNewTodo(todo) {
     console.log(todo)
+    makeRequest('/todos', 'POST', {todo})
 }
 
 
-async function makeRequest(url, reqMethod, todo) {
+async function makeRequest(url, reqMethod, body) {
 
     const response = await fetch(url, {
         headers: { "Content-Type": "application/json" },
         method: reqMethod,
-        body: JSON.stringify(todo)
+        body: JSON.stringify(body)
     })
     console.log(response)
     const data = await response.json()
