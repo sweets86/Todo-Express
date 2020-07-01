@@ -3,6 +3,17 @@
     flex-direction: column;
 }
 
+.formList {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5em;
+    align-items: center;
+}
+
 .button {
-    margin: 2px;
+    margin: 5px;
+}
+
+h4 {
+    margin: 0;
 }

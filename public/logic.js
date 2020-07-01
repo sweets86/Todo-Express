@@ -37,43 +37,70 @@ async function getAllTodos() {
     console.log(allTodos)
 
     const div = document.querySelector('div')
-    const listDiv = document.createElement('div')
+    let listDiv = document.createElement('div')
     listDiv.classList = "form"
 
     for (let i = 0; i < allTodos.length; i++) {
         let todos = allTodos[i]
 
-        const ul = document.createElement('ul')
+        if (todos != "") {
 
-        const li = document.createElement('li')
-        li.innerText = todos
-        console.log(todos)
+            let item = document.createElement('p')
+            item.innerText = todos
+            console.log(todos)
+
+            const removeButton = document.createElement('button')
+            removeButton.classList = "button"
+            removeButton.innerHTML = "Ta bort Todo"
+            removeButton.onclick = function () {
+                removeTodo(todos, item, listDiv)
+            }
+
+            item.append(removeButton)
+            listDiv.append(item)
+            div.append(listDiv)
+        }
+    }
+}
+
+function printTodo(todo) {
+    let div = document.getElementById('container')
+    div.classList = "formList"
+
+    if (todo != "") {
+
+        let li = document.createElement('h4')
+        li.classList = "h4"
+        li.innerText = todo
+        console.log(todo)
 
         const removeButton = document.createElement('button')
         removeButton.classList = "button"
         removeButton.innerHTML = "Ta bort Todo"
         removeButton.onclick = function () {
-            removeTodo(todos)
+            removeTodo(todo, li)
         }
 
         const viewButton = document.createElement('button')
         viewButton.classList = "button"
         viewButton.innerHTML = "Se Todo"
         viewButton.onclick = function () {
-            viewTodo(todos)
+            viewTodo(todo)
         }
 
-        listDiv.append(ul)
-        ul.append(li)
+        div.append(li)
         li.append(removeButton)
         li.append(viewButton)
-        div.append(listDiv)
     }
 }
 
 function addNewTodo(todo) {
-    console.log(todo)
-    makeRequest('/todos', 'POST', { todo })
+    if (todo != "") {
+        console.log(todo)
+        makeRequest('/todos', 'POST', { todo })
+    }
+
+    printTodo(todo)
 }
 
 function viewTodo(todo) {
@@ -82,10 +109,15 @@ function viewTodo(todo) {
     makeRequest('/todos/' + todo, 'GET')
 }
 
-function removeTodo(todo) {
+function removeTodo(todo, item, div) {
     console.log('Specifik ta bort', todo)
 
     makeRequest('/todos/' + todo, 'DELETE')
+
+    item.innerText = ""
+    if (item.innerText = "") {
+        div.innerText = ""
+    }
 }
 
 
