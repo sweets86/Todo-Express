@@ -1,3 +1,5 @@
+
+
 window.onload = main
 
 function main() {
@@ -50,10 +52,16 @@ async function getAllTodos() {
         const removeButton = document.createElement('button')
         removeButton.classList = "button"
         removeButton.innerHTML = "Ta bort Todo"
+        removeButton.onclick = function () {
+            removeTodo(todos)
+        }
 
         const viewButton = document.createElement('button')
         viewButton.classList = "button"
         viewButton.innerHTML = "Se Todo"
+        viewButton.onclick = function () {
+            viewTodo(todos)
+        }
 
         listDiv.append(ul)
         ul.append(li)
@@ -65,7 +73,19 @@ async function getAllTodos() {
 
 function addNewTodo(todo) {
     console.log(todo)
-    makeRequest('/todos', 'POST', {todo})
+    makeRequest('/todos', 'POST', { todo })
+}
+
+function viewTodo(todo) {
+    console.log('Specifik', todo)
+
+    makeRequest('/todos/' + todo, 'GET')
+}
+
+function removeTodo(todo) {
+    console.log('Specifik ta bort', todo)
+
+    makeRequest('/todos/' + todo, 'DELETE')
 }
 
 
