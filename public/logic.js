@@ -8,7 +8,8 @@ function main() {
     const formDiv = document.createElement('div')
     formDiv.classList = "form"
 
-    const input = document.createElement('input')
+    let input = document.createElement('input')
+    input.id = "input"
 
     const buttonAdd = document.createElement('button')
     buttonAdd.classList = "button"
@@ -78,14 +79,14 @@ function printTodo(todo) {
         removeButton.classList = "button"
         removeButton.innerHTML = "Ta bort Todo"
         removeButton.onclick = function () {
-            removeTodo(todo, list)
+            removeTodo(todo, list, div)
         }
 
         const viewButton = document.createElement('button')
         viewButton.classList = "button"
-        viewButton.innerHTML = "Se Todo"
+        viewButton.innerHTML = "Ändra Todo"
         viewButton.onclick = function () {
-            viewTodo(todo)
+            editTodo(todo)
         }
 
         div.append(list)
@@ -103,10 +104,22 @@ function addNewTodo(todo) {
     printTodo(todo)
 }
 
-function viewTodo(todo) {
-    console.log('Specifik', todo)
+function editTodo(todo) {
 
     makeRequest('/todos/' + todo, 'GET')
+    console.log('Uppdatera', todo)
+    updateTodo(todo)
+}
+
+function updateTodo(todo) {
+
+    let editInput = document.getElementById('input')
+    newTodo = input.value
+    todo = newTodo
+    input.value = ""
+
+    makeRequest('/todos/' + newTodo, 'PUT', { todo })
+    console.log('Uppdaterad till', newTodo)
 }
 
 function removeTodo(todo, item, listDiv) {
@@ -115,7 +128,7 @@ function removeTodo(todo, item, listDiv) {
     makeRequest('/todos/' + todo, 'DELETE')
 
     item.remove()
-    if (item.innerText = "" ) {
+    if (item.innerText = "") {
         listDiv.remove()
     }
 }

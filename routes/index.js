@@ -24,7 +24,22 @@ app.post('/todos', (req, res) => {
 })
 
 app.put('/todos/:id', (req, res) => {
-    res.json("Uppdaterad todo")
+    let newTodo = req.body.todo
+    let editTodo = req.params.id 
+
+    todos[0] = newTodo
+    
+    /* let findTodo = todos.length
+
+    if (findTodo < 0) {
+        todos[2] = newTodo
+    } else if (findTodo > 1) {
+        todos[1] = newTodo
+    } else {
+        todos[0] = newTodo
+    } */
+
+    res.json(todos)
 })
 
 app.delete('/todos/:id', async (req, res) => {

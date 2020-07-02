@@ -8,7 +8,6 @@ const indexRouter = require('./routes/index')
 
 app.use('/', indexRouter)
 
-
 app.listen(3000, 'localhost', () => {
     console.log("Server at port 3000")
 })
