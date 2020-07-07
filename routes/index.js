@@ -29,41 +29,29 @@ app.put('/todos/:id', (req, res) => {
     let editTodo = req.params.id
 
     let findTodo = todos.findIndex((todo) => todo == newTodo)
-    
+
     if (findTodo == -1) {
-        res.status(404).json({status: "matchar inte"})
+        res.status(404).json({ status: "matchar inte" })
     } else {
         todos[findTodo] = todo
         res.json(todos)
     }
 
-    
-    
-    /* todos[findTodo] = todo */
-
-
-
-    /* let findTodo = todos.length
-
-    if (findTodo < 0) {
-        todos[2] = newTodo
-    } else if (findTodo > 1) {
-        todos[1] = newTodo
-    } else {
-        todos[0] = newTodo
-    } */
-
 })
 
-app.delete('/todos/:id', async (req, res) => {
+app.delete('/todos/:id', (req, res) => {
 
-    try {
-        const paramId = await req.params.id
-        todos.splice(paramId, 1)
+    const paramId = req.params.id
+
+    let findTodo = todos.findIndex((todo) => todo == paramId)
+
+    if (findTodo == -1) {
+        res.status(404).json({ status: "matchar inte" })
+    } else {
+        todos.splice(findTodo, 1)
         res.json("Borttagen")
-    } catch {
-        res.json('Hittar inte')
     }
+
 })
 
 module.exports = app

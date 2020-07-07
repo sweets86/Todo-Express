@@ -41,25 +41,28 @@ async function getAllTodos() {
     listDiv.classList = "formList"
     listDiv.innerText = ""
 
+    let ol = document.createElement('ol')
+    
     for (let i = 0; i < allTodos.length; i++) {
         let todos = allTodos[i]
 
         if (todos != "") {
 
-            let item = document.createElement('p')
+            let item = document.createElement('li')
             item.innerText = todos
             item.classList = "p"
             console.log(todos)
 
-            const removeButton = document.createElement('button')
+            /* const removeButton = document.createElement('button')
             removeButton.classList = "button"
             removeButton.innerHTML = "Ta bort"
             removeButton.onclick = function () {
                 removeTodo(todos, item, listDiv)
-            }
+            } */
 
-            listDiv.append(item)
-            item.append(removeButton)
+            listDiv.append(ol)
+            ol.append(item)
+            /* item.append(removeButton) */
         }
     }
 }
@@ -88,9 +91,10 @@ function printTodo(todo, newTodo) {
         viewButton.onclick = function () {
             editTodo(todo)
             list.innerText = newTodo
-            if (list.id == undefined) {
+            if (newTodo == undefined) {
                 list.remove()
             }
+            console.log(todo)
         }
 
         div.append(list)
@@ -146,9 +150,10 @@ function updateTodo(todo) {
     }
 } */
 
-function removeTodo(todo, item, listDiv) {
+function removeTodo(todo, item, list, listDiv, div) {
 
     item.remove()
+
     /*     let clear = document.getElementById('container') */
 
     if (item.innerText == "") {
