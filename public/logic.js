@@ -64,16 +64,16 @@ async function getAllTodos() {
     }
 }
 
-function printTodo(todo) {
+function printTodo(todo, newTodo) {
 
     if (todo != "") {
         let div = document.getElementById('container')
         div.classList = "formList"
 
         let list = document.createElement('h4')
-        list.classList = "h4"
+        list.id = "h4"
         list.innerText = todo
-        console.log(todo)
+        list.classList = "h4"
 
         const removeButton = document.createElement('button')
         removeButton.classList = "button"
@@ -87,12 +87,17 @@ function printTodo(todo) {
         viewButton.innerHTML = "Ändra Todo"
         viewButton.onclick = function () {
             editTodo(todo)
+            list.innerText = newTodo
+            if (list.id == undefined) {
+                list.remove()
+            }
         }
 
         div.append(list)
         list.append(removeButton)
         list.append(viewButton)
     }
+
 }
 
 function addNewTodo(todo) {
@@ -115,22 +120,45 @@ function updateTodo(todo) {
 
     let editInput = document.getElementById('input')
     newTodo = input.value
-    todo = newTodo
+    /* todo = newTodo */
     input.value = ""
 
-    makeRequest('/todos/' + newTodo, 'PUT', { todo })
+    makeRequest('/todos/' + newTodo, 'PUT', { todo, newTodo })
     console.log('Uppdaterad till', newTodo)
+
+    /* updateListTodo(newTodo) */
+    /* let update = document.getElementById('h4')
+    if (updateTodo) {
+        if (update.innerText = todo) {
+            update.innerText = newTodo
+            console.log(newTodo)
+        }
+    } */
+    printTodo(newTodo)
 }
 
-function removeTodo(todo, item, listDiv) {
-    console.log('Specifik ta bort', todo)
+/* function updateListTodo(newTodo) {
 
-    makeRequest('/todos/' + todo, 'DELETE')
+    if (newTodo != "") {
+        let updateList = document.getElementById('h4')
+        updateList.innerText = newTodo
+        console.log(newTodo)
+    }
+} */
+
+function removeTodo(todo, item, listDiv) {
 
     item.remove()
-    if (item.innerText = "") {
+    /*     let clear = document.getElementById('container') */
+
+    if (item.innerText == "") {
         listDiv.remove()
-    }
+    } /* else if (updateListTodo) {
+        clear.innerHTML = ""
+    } */
+
+    makeRequest('/todos/' + todo, 'DELETE')
+    console.log('Specifik ta bort', todo)
 }
 
 
