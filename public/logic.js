@@ -3,6 +3,9 @@
 window.onload = main
 
 function main() {
+
+    getApi()
+
     const div = document.querySelector('div')
 
     const formDiv = document.createElement('div')
@@ -42,7 +45,7 @@ async function getAllTodos() {
     listDiv.innerText = ""
 
     let ol = document.createElement('ol')
-    
+
     for (let i = 0; i < allTodos.length; i++) {
         let todos = allTodos[i]
 
@@ -166,6 +169,42 @@ function removeTodo(todo, item, list, listDiv, div) {
     console.log('Specifik ta bort', todo)
 }
 
+async function getApi() {
+    let test = await makeAnOtherRequest("https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/16.158/lat/58.5812/data.json", "GET")
+    console.log(test)
+
+    const allTimes = []
+
+    test.timeSeries.forEach(time => {
+        if(time['validTime']) {
+            allTimes.push(time)
+        }
+    })
+
+    /* const allParam = []
+
+    test.timeSeries.forEach(param => {
+        if(param['parameters']) {
+            allParam.push(param)
+        }
+    }) */
+
+    const apiContainer = document.getElementsByClassName('apiContainer')[0]
+
+    console.log(allTimes)
+    /* console.log(allParam) */
+
+    allTimes.forEach((times) => {
+        const timeDiv = document.createElement('div')
+        timeDiv.className = 'timeBox'
+
+        let timeText = document.createElement('h5')
+        timeText.innerText = times.validTime
+
+        timeDiv.append(timeText)
+        apiContainer.append(timeDiv)
+    })
+}
 
 async function makeRequest(url, reqMethod, body) {
 
@@ -177,5 +216,18 @@ async function makeRequest(url, reqMethod, body) {
     console.log(response)
     const data = await response.json()
     console.log(data)
+    return data // return skickar med data så den kan användas vidare
+}
+
+async function makeAnOtherRequest(url, reqMethod, body) {
+    const response = await fetch(url, {
+        /* headers: {
+            "Content-Type": "Application-json"
+        }, */
+        method: reqMethod,
+        body: JSON.stringify(body)
+    })
+
+    const data = await response.json()
     return data // return skickar med data så den kan användas vidare
 }
