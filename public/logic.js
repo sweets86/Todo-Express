@@ -170,7 +170,7 @@ function removeTodo(todo, item, list, listDiv, div) {
 }
 
 async function getApi() {
-    let test = await makeAnOtherRequest("https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/16.158/lat/58.5812/data.json", "GET")
+    let test = await makeAnOtherRequest("https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/11.975/lat/57.7088/data.json", "GET")
     console.log(test)
 
     const allTimes = []
@@ -198,10 +198,57 @@ async function getApi() {
         const timeDiv = document.createElement('div')
         timeDiv.className = 'timeBox'
 
+        const weatherDiv = document.createElement('div')
+        weatherDiv.className = 'weather'
+
         let timeText = document.createElement('h5')
+        timeText.className = 'h5'
         timeText.innerText = times.validTime
 
+        let params = times.parameters
+        console.log(times.parameters)
+
+        params.forEach((param) => {
+            let twoNames = param.name
+            if(twoNames === 't') {
+                let celsius = param.unit
+                let celValue = param.values
+
+                let celText = document.createElement('h5')
+                celText.className = 'h5'
+                celText.innerText = celsius
+
+                let cel = document.createElement('h5')
+                cel.className = 'h5'
+                cel.innerText = celValue
+
+                weatherDiv.append(cel)
+                weatherDiv.append(celText)
+
+                console.log(celsius, celValue[0])
+            }if (twoNames === 'ws') {
+                let wind = param.unit
+                let windValue = param.values
+
+                let windText = document.createElement('h5')
+                windText.className = 'h5'
+                windText.innerText = wind
+
+                let windVal = document.createElement('h5')
+                windVal.className = 'h5'
+                windVal.innerText = windValue
+
+                weatherDiv.append(windVal)
+                weatherDiv.append(windText)
+
+                console.log(wind, windValue[0])
+            }
+
+            
+        })
+
         timeDiv.append(timeText)
+        timeDiv.append(weatherDiv)
         apiContainer.append(timeDiv)
     })
 }

@@ -30,7 +30,17 @@ p {
     /* flex-wrap: wrap; */
     width: 10em;
     height: 10em;
-    background-color: azure;
-    padding: 1em;
-    margin: 1em;
+    background-color: #e1ebeb;
+    padding: 0.5em;
+    margin: 0.5em;
+}
+
+h5 {
+    margin: 0;
+    padding: 0.2em;
+}
+
+.weather {
+    display: flex;
+    flex-direction: row;
 }
