@@ -44,3 +44,7 @@ h5 {
     display: flex;
     flex-direction: row;
 }
+
+.danger {
+    color: red;
+}

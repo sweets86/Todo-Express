@@ -10,25 +10,33 @@ app.get('/todos', (req, res) => {
 app.get('/todos/:id', (req, res) => {
 
     const paramId = req.params.id
-    res.json(paramId)
-    res.render('/todos/:id')
-
-    res.json('Hittar inte')
+    if (paramId) {
+        res.json(paramId)
+    } else {
+        res.json('Hittar inte')
+    }
 
 })
 
 app.post('/todos', (req, res) => {
-    console.log(req.body.todo)
-    todos.push(req.body.todo)
-    res.json("Ny todo")
+
+    let todo = req.body.todo
+
+    if (todo != "" && todo != null) {
+        console.log(req.body.todo)
+        todos.push(req.body.todo)
+        res.json("Ny todo")
+    } else {
+        res.json("Inga todos")
+    }
 })
 
 app.put('/todos/:id', (req, res) => {
-    let newTodo = req.body.todo
+    let oldTodo = req.body.todo
     let todo = req.body.newTodo
     let editTodo = req.params.id
 
-    let findTodo = todos.findIndex((todo) => todo == newTodo)
+    let findTodo = todos.findIndex((todo) => todo == oldTodo)
 
     if (findTodo == -1) {
         res.status(404).json({ status: "matchar inte" })
@@ -55,24 +63,3 @@ app.delete('/todos/:id', (req, res) => {
 })
 
 module.exports = app
-
-
-/* let findTodo = todos.length
-
-    for (let i = 0; i < todos.length; i++) {
-        let findTodo = todos[i]
-
-        if (findTodo = findTodo[i]) {
-            findTodo = newTodo
-        }
-
-        if (findTodo[""] = todo) {
-            todo = newTodo
-        }
-
-        if (newTodo == editTodo) {
-            todo = newTodo
-        }
-        todos[0] = newTodo
-
-    } */

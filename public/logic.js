@@ -33,10 +33,10 @@ function main() {
     formDiv.append(input)
     formDiv.append(buttonAdd)
     formDiv.append(button)
-
 }
 
 async function getAllTodos() {
+
     const allTodos = await makeRequest('/todos', 'GET')
     console.log(allTodos)
 
@@ -56,16 +56,8 @@ async function getAllTodos() {
             item.classList = "p"
             console.log(todos)
 
-            /* const removeButton = document.createElement('button')
-            removeButton.classList = "button"
-            removeButton.innerHTML = "Ta bort"
-            removeButton.onclick = function () {
-                removeTodo(todos, item, listDiv)
-            } */
-
             listDiv.append(ol)
             ol.append(item)
-            /* item.append(removeButton) */
         }
     }
 }
@@ -88,23 +80,32 @@ function printTodo(todo, newTodo) {
             removeTodo(todo, list, div)
         }
 
-        const viewButton = document.createElement('button')
-        viewButton.classList = "button"
-        viewButton.innerHTML = "Ändra Todo"
-        viewButton.onclick = function () {
-            editTodo(todo)
+        const editButton = document.createElement('button')
+        editButton.classList = "button"
+        editButton.innerHTML = "Ändra Todo"
+        editButton.onclick = function () {
+            updateTodo(todo)
             list.innerText = newTodo
-            if (newTodo == undefined) {
+
+            if (newTodo == undefined || newTodo == "") {
                 list.remove()
             }
             console.log(todo)
         }
 
-        div.append(list)
-        list.append(removeButton)
-        list.append(viewButton)
-    }
+        let viewButton = document.createElement('button')
+        viewButton.classList = "button"
+        viewButton.innerHTML = "Visa Todo"
+        viewButton.onclick = function () {
+            viewTodo(todo)
+        }
+        console.log(todo)
 
+        div.append(list)
+        list.append(viewButton)
+        list.append(removeButton)
+        list.append(editButton)
+    }
 }
 
 function addNewTodo(todo) {
@@ -116,54 +117,41 @@ function addNewTodo(todo) {
     printTodo(todo)
 }
 
-function editTodo(todo) {
+function viewTodo(todo) {
 
     makeRequest('/todos/' + todo, 'GET')
-    console.log('Uppdatera', todo)
-    updateTodo(todo)
+    console.log('Visa', todo)
+
+    let colorTodo = document.querySelector('h4')
+    colorTodo.className = "danger"
+    colorTodo.innerText = todo
+
 }
 
 function updateTodo(todo) {
 
     let editInput = document.getElementById('input')
     newTodo = input.value
-    /* todo = newTodo */
     input.value = ""
 
-    makeRequest('/todos/' + newTodo, 'PUT', { todo, newTodo })
-    console.log('Uppdaterad till', newTodo)
+    if (newTodo != "") {
 
-    /* updateListTodo(newTodo) */
-    /* let update = document.getElementById('h4')
-    if (updateTodo) {
-        if (update.innerText = todo) {
-            update.innerText = newTodo
-            console.log(newTodo)
-        }
-    } */
-    printTodo(newTodo)
+        makeRequest('/todos/' + newTodo, 'PUT', { todo, newTodo })
+        console.log('Uppdaterad till', newTodo)
+
+        printTodo(newTodo)
+    } else {
+        printTodo(todo)
+    }
 }
 
-/* function updateListTodo(newTodo) {
-
-    if (newTodo != "") {
-        let updateList = document.getElementById('h4')
-        updateList.innerText = newTodo
-        console.log(newTodo)
-    }
-} */
-
-function removeTodo(todo, item, list, listDiv, div) {
+function removeTodo(todo, item, listDiv) {
 
     item.remove()
 
-    /*     let clear = document.getElementById('container') */
-
     if (item.innerText == "") {
         listDiv.remove()
-    } /* else if (updateListTodo) {
-        clear.innerHTML = ""
-    } */
+    }
 
     makeRequest('/todos/' + todo, 'DELETE')
     console.log('Specifik ta bort', todo)
@@ -176,23 +164,14 @@ async function getApi() {
     const allTimes = []
 
     test.timeSeries.forEach(time => {
-        if(time['validTime']) {
+        if (time['validTime']) {
             allTimes.push(time)
         }
     })
 
-    /* const allParam = []
-
-    test.timeSeries.forEach(param => {
-        if(param['parameters']) {
-            allParam.push(param)
-        }
-    }) */
-
     const apiContainer = document.getElementsByClassName('apiContainer')[0]
 
     console.log(allTimes)
-    /* console.log(allParam) */
 
     allTimes.forEach((times) => {
         const timeDiv = document.createElement('div')
@@ -210,7 +189,7 @@ async function getApi() {
 
         params.forEach((param) => {
             let twoNames = param.name
-            if(twoNames === 't') {
+            if (twoNames === 't') {
                 let celsius = param.unit
                 let celValue = param.values
 
@@ -226,7 +205,7 @@ async function getApi() {
                 weatherDiv.append(celText)
 
                 console.log(celsius, celValue[0])
-            }if (twoNames === 'ws') {
+            } if (twoNames === 'ws') {
                 let wind = param.unit
                 let windValue = param.values
 
@@ -243,8 +222,6 @@ async function getApi() {
 
                 console.log(wind, windValue[0])
             }
-
-            
         })
 
         timeDiv.append(timeText)
@@ -263,18 +240,15 @@ async function makeRequest(url, reqMethod, body) {
     console.log(response)
     const data = await response.json()
     console.log(data)
-    return data // return skickar med data så den kan användas vidare
+    return data
 }
 
 async function makeAnOtherRequest(url, reqMethod, body) {
     const response = await fetch(url, {
-        /* headers: {
-            "Content-Type": "Application-json"
-        }, */
         method: reqMethod,
         body: JSON.stringify(body)
     })
 
     const data = await response.json()
-    return data // return skickar med data så den kan användas vidare
+    return data
 }
