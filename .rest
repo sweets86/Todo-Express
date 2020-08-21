@@ -2,16 +2,29 @@ GET http://localhost:3000/todos
 
 ###
 
-GET http://localhost:3000/todos/id
+GET http://localhost:3000/todos/_f8vkr7fjp
 
 ###
 
 POST http://localhost:3000/todos
+Content-Type: application/json
+
+{
+    "title": "hoppa",
+    "id": ""
+}
 
 ###
 
-PUT http://localhost:3000/todos/id
+PUT http://localhost:3000/todos/_f8vkr7fjp
+Content-Type: application/json
+
+{
+    "title": "dansa",
+    "id": "_f8vkr7fjp"
+}
 
 ###
 
-DELETE http://localhost:3000/todos/id
+DELETE http://localhost:3000/todos/_f8vkr7fjp
+Content-Type: application/json
