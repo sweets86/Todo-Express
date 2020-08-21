@@ -24,3 +24,6 @@ Denna data är hämtad från SMHIs öppna väder API och uppdateras i och med de
 Ladda ner filen från Github och kopiera innehållet i en ny mapp och öppna mappen i VSC. Du behöver ha node.js installerat på datorn. Öppna terminalen och skriv in npm install. Du kommer se att node_modules mappen läggs till.
 
 Därefter skriver du in npm start i terminalen. Nu bör du fått igång applikationen till port localhost:3000.
+
+# Länk till Github-repo
+https://github.com/sweets86/Todo-Express
