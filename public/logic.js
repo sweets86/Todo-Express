@@ -65,15 +65,9 @@ async function getAllTodos() {
             editButton.innerHTML = "Ändra Todo"
             editButton.onclick = function () {
                 updateTodo(todo, id)
-                /* item.innerText = newTodo
-
-                if (newTodo == undefined || newTodo == "") {
-                    list.remove()
-                }
-                console.log(todo) */
             }
 
-            let viewButton = document.createElement('button')
+            const viewButton = document.createElement('button')
             viewButton.classList = "button"
             viewButton.innerHTML = "Visa Todo"
             viewButton.onclick = function () {
@@ -92,9 +86,7 @@ async function getAllTodos() {
             item.append(editButton)
             item.append(viewButton)
             item.append(removeButton)
-
         }
-        /* updateTodo(todo, id) */
     }
 }
 
@@ -111,47 +103,9 @@ function printTodo(todo, newTodo) {
         if (todo) {
             list.innerText = todo
         } else list.innerText = newTodo
-
-
-        /* const removeButton = document.createElement('button')
-        removeButton.classList = "button"
-        removeButton.innerHTML = "Ta bort Todo"
-        removeButton.onclick = function () {
-            removeTodo(todo, list)
-        } */
-
-        /* if (newTodo == undefined || newTodo == "") {
-            list.remove()
-        } else list.innerText = newTodo */
-
-        /* const editButton = document.createElement('button')
-        editButton.classList = "button"
-        editButton.innerHTML = "Ändra Todo"
-        editButton.onclick = function () {
-            updateTodo(todo, id)
-            list.innerText = newTodo
-            
-            if (newTodo == undefined || newTodo == "") {
-                list.remove()
-            }
-            console.log(todo)
-        } */
-
-        /* let viewButton = document.createElement('button')
-        viewButton.classList = "button"
-        viewButton.innerHTML = "Visa Todo"
-        viewButton.onclick = function () {
-            viewTodo(todo)
-        } */
-        /* console.log(todo) */
-
-        /* list.append(viewButton) */
-        /* list.append(removeButton) */
-        /* list.append(editButton) */
     }
 
     div.append(list)
-
 }
 
 function addNewTodo(todo) {
@@ -171,12 +125,12 @@ function viewTodo(todo, id) {
 
     let colorTodo = document.querySelector('h4')
     colorTodo.className = "danger"
+
     if (todo) {
         colorTodo.innerText = todo
     } else {
         colorTodo.remove()
     }
-
 }
 
 function updateTodo(todo, id) {
@@ -185,29 +139,11 @@ function updateTodo(todo, id) {
     newTodo = input.value
     input.value = ""
 
-    /* let oldTodo = todo
-    let paramId = id
-    console.log(id) */
     console.log(todo)
     makeRequest('/todos/' + id, 'PUT', { title: newTodo, id })
     console.log('Uppdaterad till', newTodo)
 
     printTodo(newTodo)
-
-    /* makeRequest('/todos/' + paramId, 'PUT', { title: newTodo })
-    console.log(paramId)
-    console.log('Uppdaterad till', newTodo) */
-
-    /* if (newTodo != "") {
-        console.log(id)
-
-        makeRequest('/todos/' + id, 'PUT', { title: newTodo })
-        console.log('Uppdaterad till', newTodo)
-
-        printTodo(newTodo)
-    } */ /* else {
-        printTodo(todo)
-    } */
 }
 
 function removeTodo(todo, item, id) {
@@ -216,7 +152,6 @@ function removeTodo(todo, item, id) {
 
     makeRequest('/todos/' + id, 'DELETE')
     console.log('Specifik ta bort', todo)
-
 }
 
 async function getApi() {
@@ -247,7 +182,6 @@ async function getApi() {
         timeText.innerText = times.validTime
 
         let params = times.parameters
-        /* console.log(times.parameters) */
 
         params.forEach((param) => {
             let twoNames = param.name
@@ -266,7 +200,6 @@ async function getApi() {
                 weatherDiv.append(cel)
                 weatherDiv.append(celText)
 
-                /* console.log(celsius, celValue[0]) */
             } if (twoNames === 'ws') {
                 let wind = param.unit
                 let windValue = param.values
@@ -281,8 +214,6 @@ async function getApi() {
 
                 weatherDiv.append(windVal)
                 weatherDiv.append(windText)
-
-                /* console.log(wind, windValue[0]) */
             }
         })
 

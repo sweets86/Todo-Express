@@ -50,14 +50,10 @@ app.post('/todos', (req, res) => {
 })
 
 app.put('/todos/:id', (req, res) => {
-    /* const oldTodo = req.body.id */
-    /* const newTodo = req.body.newTodo */
+
     const paramId = req.params.id
 
     let findTodoIndex = todos.findIndex((todo) => todo.id == paramId)
-
-    /* console.log(oldTodo) */
-/*     console.log(newTodo) */
 
     if (findTodoIndex == -1) {
         res.status(404).json({ status: "matchar inte" })
@@ -65,9 +61,6 @@ app.put('/todos/:id', (req, res) => {
         req.findTodoIndex = findTodoIndex
         todos[req.findTodoIndex] = req.body
         res.json({status: "Todo uppdaterad"})
-
-        /* todos[findTodoIndex] = editTodo
-        res.json(todos) */
     }
 
 })
