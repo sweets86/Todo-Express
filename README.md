@@ -18,7 +18,7 @@ Visa TODO knappen, för respektive TODO visar med röd färg den specifika TODOn
 
 För att lättare kunna planera din dag och dina TODOs har du en 10-dagars väderprognos.
 Där kan du se vilken temperatur och vindhastighet det kommer att vara vid ett specifikt klockslag.
-Denna data är hämtad från SMHIs öpnna väder API och uppdateras i och med det.
+Denna data är hämtad från SMHIs öppna väder API och uppdateras i och med det.
 
 # För att köra applikationen
 Ladda ner filen från Github och kopiera innehållet i en ny mapp och öppna mappen i VSC. Du behöver ha node.js installerat på datorn. Öppna terminalen och skriv in npm install. Du kommer se att node_modules mappen läggs till.
